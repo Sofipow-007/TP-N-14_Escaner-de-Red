@@ -23,21 +23,21 @@ Crear una aplicación que pueda realizar un escaneo de red, que pueda cumplir co
 
 El proyecto está dividido en diferentes sectores importantes para que pueda utilizarse correctamente:
 
-##### En la carpeta "src" tenemos:
+#### En la carpeta "src" tenemos:
 
-- Paquete "modelo": Donde se guardan todos los archivos que sirven para la parte lógica del escáner, ya sea para hacer el procedimiento o para calcular los resultados
+- *Paquete "modelo"*: Donde se guardan todos los archivos que sirven para la parte lógica del escáner, ya sea para hacer el procedimiento o para calcular los resultados
 
-- Paquete "vistas": En esta sección se encuentran los códigos que van a servir para la parte visual del programa, siendo donde se va a ingresar y mostrar toda la información calculada por el escáner
+- *Paquete "vistas"*: En esta sección se encuentran los códigos que van a servir para la parte visual del programa, siendo donde se va a ingresar y mostrar toda la información calculada por el escáner
 
-- Paquete "controlador": Es donde va a estar la clase intermediaria entre el modelo y la vista, para que sea posible la división entre métodos que se van a llamar en el main para poder realizar sus funciones y saber identificar cuando se necesitan
+- *Paquete "controlador"*: Es donde va a estar la clase intermediaria entre el modelo y la vista, para que sea posible la división entre métodos que se van a llamar en el main para poder realizar sus funciones y saber identificar cuando se necesitan
 
-- Paquete "main": Donde se encuentra la clase utilizada para correr el programa final
+- *Paquete "main"*: Donde se encuentra la clase utilizada para correr el programa final
 
-##### En la carpeta "docs" tenemos:
+#### En la carpeta "docs" tenemos:
 
-- Archivo PDF sobre la documentación del programa: En este documento se van a tomar en cuenta muchos detalles, ya sea para que va a servir el programa, como se arma el sistema, una forma más detallada de los métodos utilizados, tecnologías elegidas, problemas y posibles soluciones que se podrían hacer en un futuro.
+- *Archivo PDF sobre la documentación del programa*: En este documento se van a tomar en cuenta muchos detalles, ya sea para que va a servir el programa, como se arma el sistema, una forma más detallada de los métodos utilizados, tecnologías elegidas, problemas y posibles soluciones que se podrían hacer en un futuro.
 
-- Archivo PDF "Manual para el usuario": Se trata de un documento donde se va a dar información de cómo poner el práctica el programa viniendo de una visión más dirigida al usuario. Ahí se van a explicar los pasos para poder instalarlo, como utilizarlo, detalles para solucionar problemas y más-
+- *Archivo PDF "Manual para el usuario"*: Se trata de un documento donde se va a dar información de cómo poner el práctica el programa viniendo de una visión más dirigida al usuario. Ahí se van a explicar los pasos para poder instalarlo, como utilizarlo, detalles para solucionar problemas y más-
 
 ## Tecnologías a utilizar
 
