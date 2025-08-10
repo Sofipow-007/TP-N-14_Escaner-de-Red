@@ -2,8 +2,6 @@ package src.vistas;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 
 public class ventana_principal extends JFrame{
 
@@ -11,7 +9,6 @@ public class ventana_principal extends JFrame{
     private JTextField ip_final = new JTextField(10);
     private JButton scan = new JButton("Escanear");
     private JButton clean = new JButton("Limpiar");
-
     
     public ventana_principal(){
         setTitle("Escaner de Red");
@@ -49,12 +46,12 @@ public class ventana_principal extends JFrame{
         gbc.gridx = 2;
         lamina.add(ip_final, gbc);
 
-        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0)); // 10 px de espacio entre botones
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 0)); // 50 px de espacio entre botones
         panelBotones.add(scan);
         panelBotones.add(clean);
 
         gbc.anchor = GridBagConstraints.CENTER;
-        gbc.fill = GridBagConstraints.NONE;
+        gbc.fill = GridBagConstraints.CENTER;
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridwidth = 3;
@@ -87,11 +84,4 @@ public class ventana_principal extends JFrame{
             }
         });
     }
-
-    public static void main(String[] args) {
-        ventana_principal vent_princ = new ventana_principal();
-        vent_princ.setVisible(true);
-    }
-    
-
 }
