@@ -2,8 +2,10 @@ package src.vistas;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class ventana_principal extends JFrame{
+public class ventana_principal extends JFrame implements ActionListener{
 
     private JTextField ip_inicio = new JTextField(10);
     private JTextField ip_final = new JTextField(10);
@@ -47,6 +49,8 @@ public class ventana_principal extends JFrame{
         lamina.add(ip_final, gbc);
 
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 0)); // 50 px de espacio entre botones
+        scan.addActionListener(this);
+        clean.addActionListener(this);
         panelBotones.add(scan);
         panelBotones.add(clean);
 
@@ -83,5 +87,21 @@ public class ventana_principal extends JFrame{
                 }
             }
         });
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
+
+        if (source == scan){
+            ventanaCargar loading = new ventanaCargar(this);
+            loading.setVisible(true);
+        }
+
+        // if (source == clean){
+            
+        // }
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
 }
