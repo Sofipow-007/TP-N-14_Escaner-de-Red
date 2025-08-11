@@ -62,40 +62,48 @@ public class ventana_principal extends JFrame implements ActionListener{
 
         lamina.add(panelBotones, gbc);
 
-        setPlaceholder(ip_inicio, "Ingrese la IP: ");
-        setPlaceholder(ip_final, "Ingrese la IP:");
+        // setPlaceholder(ip_inicio, "Ingrese la IP: ");
+        // setPlaceholder(ip_final, "Ingrese la IP:");
 
         add(lamina);
         
     }
 
-    private void setPlaceholder(JTextField field, String placeholder) {
-        field.setForeground(Color.GRAY);
-        field.setText(placeholder);
+    // private void setPlaceholder(JTextField field, String placeholder) {
+    //     field.setForeground(Color.GRAY);
+    //     field.setText(placeholder);
 
-        field.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                if (field.getText().equals(placeholder)) {
-                    field.setText("");
-                    field.setForeground(Color.BLACK);
-                }
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                if (field.getText().isEmpty()) {
-                    field.setForeground(Color.GRAY);
-                    field.setText(placeholder);
-                }
-            }
-        });
-    }
+    //     field.addFocusListener(new java.awt.event.FocusAdapter() {
+    //         public void focusGained(java.awt.event.FocusEvent evt) {
+    //             if (field.getText().equals(placeholder)) {
+    //                 field.setText("");
+    //                 field.setForeground(Color.BLACK);
+    //             }
+    //         }
+    //         public void focusLost(java.awt.event.FocusEvent evt) {
+    //             if (field.getText().isEmpty()) {
+    //                 field.setForeground(Color.GRAY);
+    //                 field.setText(placeholder);
+    //             }
+    //         }
+    //     });
+    // }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
+        String ipInicioIngre = ip_inicio.getText();
+        String ipFinalIngre = ip_final.getText();
+
         if (source == scan){
-            ventanaCargar loading = new ventanaCargar(this);
-            loading.setVisible(true);
+            if (!ipInicioIngre.isEmpty() || !ipFinalIngre.isEmpty()){
+                ventanaCargar loading = new ventanaCargar(this);
+                loading.setVisible(true);
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Debe ingresar más información");
+            }
         }
 
         // if (source == clean){
