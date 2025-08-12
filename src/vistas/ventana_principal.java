@@ -99,12 +99,12 @@ public class ventana_principal extends JFrame implements ActionListener{
         String ipFinalIngre = ip_final.getText();
 
         if (source == scan){
-            if (!ipInicioIngre.isEmpty() || !ipFinalIngre.isEmpty()){
-                ventanaCargar loading = new ventanaCargar(this);
-                loading.setVisible(true);
+            if (ipInicioIngre.isEmpty() || ipFinalIngre.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Debe ingresar más información");
             }
             else{
-                JOptionPane.showMessageDialog(this, "Debe ingresar más información");
+                ventanaCargar loading = new ventanaCargar(this);
+                loading.setVisible(true);
             }
         }
 
