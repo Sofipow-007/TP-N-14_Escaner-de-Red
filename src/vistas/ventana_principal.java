@@ -1,6 +1,8 @@
 package src.vistas;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,11 +13,13 @@ public class ventana_principal extends JFrame implements ActionListener{
     private JTextField ip_final = new JTextField(10);
     private JButton scan = new JButton("Escanear");
     private JButton clean = new JButton("Limpiar");
+    private JTable tablaEquiposRed = new JTable();
+    private DefaultTableModel modeloTabla;
     
     public ventana_principal(){
         setTitle("Escaner de Red");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 300);
+        setSize(600, 400);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
@@ -62,32 +66,30 @@ public class ventana_principal extends JFrame implements ActionListener{
 
         lamina.add(panelBotones, gbc);
 
-        // setPlaceholder(ip_inicio, "Ingrese la IP: ");
-        // setPlaceholder(ip_final, "Ingrese la IP:");
+        JLabel presentarTabla = new JLabel("Tabla de información; todos los resultados van a aparecer a continuación");
+        
+        gbc.fill = GridBagConstraints.CENTER;
+        gbc.gridy = 4;
+
+        lamina.add(presentarTabla, gbc);
+
+        modeloTabla = new DefaultTableModel();
+        modeloTabla.setColumnIdentifiers(new String[] { "Dirección de IP", "Nombre de equipo", "Conectado", "Tiempo de respuesta" });
+        modeloTabla.addRow(new Object[]{ "127.0.0.1", "localhost", true, "1 ms"});
+
+        tablaEquiposRed = new JTable(modeloTabla);
+
+        JScrollPane scrollTabla = new JScrollPane(tablaEquiposRed);
+        scrollTabla.setPreferredSize(new Dimension(500, 80));
+
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridy = 5;
+        gbc.gridwidth = 3;
+
+        lamina.add(scrollTabla, gbc);
 
         add(lamina);
-        
     }
-
-    // private void setPlaceholder(JTextField field, String placeholder) {
-    //     field.setForeground(Color.GRAY);
-    //     field.setText(placeholder);
-
-    //     field.addFocusListener(new java.awt.event.FocusAdapter() {
-    //         public void focusGained(java.awt.event.FocusEvent evt) {
-    //             if (field.getText().equals(placeholder)) {
-    //                 field.setText("");
-    //                 field.setForeground(Color.BLACK);
-    //             }
-    //         }
-    //         public void focusLost(java.awt.event.FocusEvent evt) {
-    //             if (field.getText().isEmpty()) {
-    //                 field.setForeground(Color.GRAY);
-    //                 field.setText(placeholder);
-    //             }
-    //         }
-    //     });
-    // }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -107,7 +109,7 @@ public class ventana_principal extends JFrame implements ActionListener{
         }
 
         // if (source == clean){
-            
+
         // }
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
