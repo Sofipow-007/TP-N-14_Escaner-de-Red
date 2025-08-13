@@ -16,4 +16,8 @@ public class listaEquiposRed { // Esta clase va a servir para poder mantener un 
     public void limpiarLista(){
         listaEquipos.clear();
     }
+
+    public ArrayList<ResultadoScanner> getListaEquipos(){
+        return listaEquipos;
+    }
 }

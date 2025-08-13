@@ -3,6 +3,8 @@ package src.vistas;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import src.modelo.ComienzoScanner;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,7 +26,7 @@ public class ventana_principal extends JFrame implements ActionListener{
     public ventana_principal(){
         setTitle("Escaner de Red");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(720, 550);
+        setSize(720, 620);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
@@ -59,8 +61,9 @@ public class ventana_principal extends JFrame implements ActionListener{
 
         gbc.gridy = 3;
         gbc.gridx = 0;
-        lamina.add(new JLabel("Timeout (ms):"), gbc);
-        gbc.gridx = 1; lamina.add(tiempoTimeout, gbc);
+        lamina.add(new JLabel("Tiempo de espera (ms):"), gbc);
+        gbc.gridx = 2;
+        lamina.add(tiempoTimeout, gbc);
 
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 0)); // 50 px de espacio entre botones
         scan.addActionListener(this);
@@ -106,25 +109,31 @@ public class ventana_principal extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Object source = e.getSource();
-
-        String ipInicioIngre = ip_inicio.getText();
-        String ipFinalIngre = ip_final.getText();
-
-        if (source == scan){
-            if (ipInicioIngre.isEmpty() || ipFinalIngre.isEmpty()){
-                JOptionPane.showMessageDialog(this, "Debe ingresar más información");
+        try{
+            Object source = e.getSource();
+    
+            String ipInicioIngre = ip_inicio.getText();
+            String ipFinalIngre = ip_final.getText();
+            int tiempo_espera = Integer.parseInt(tiempoTimeout.getText());
+    
+            if (source == scan){
+                if (ipInicioIngre.isEmpty() || ipFinalIngre.isEmpty()){
+                    JOptionPane.showMessageDialog(this, "Debe ingresar más información");
+                }
+                else{
+                    ventanaCargar loading = new ventanaCargar(this);
+                    loading.setVisible(true);
+                    
+                }
             }
-            else{
-                ventanaCargar loading = new ventanaCargar(this);
-                loading.setVisible(true);
-            }
+        }
+        catch (Exception a){
+            System.out.println("Tuvo un error en su programa");
         }
 
         // if (source == clean){
 
         // }
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
 }

@@ -6,8 +6,11 @@ import java.awt.*;
 public class ventanaCargar extends JDialog{
     
     private JProgressBar barraProgreso;
+    // private Runnable onFinish;
 
     public ventanaCargar(JFrame ventanFrame){
+        // this.onFinish = onFinish;
+
         setTitle("Proceso de búsqueda");
         setSize(400, 150);
         setLocationRelativeTo(null);

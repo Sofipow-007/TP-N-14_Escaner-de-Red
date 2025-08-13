@@ -3,6 +3,7 @@ package src.modelo;
 import java.io.IOException;
 import java.net.InetAddress; //Librería utilizada para poder usar el protocolo IP
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import src.vistas.*;
 
@@ -10,11 +11,34 @@ public class ComienzoScanner {
     private String ipInicio;
     private String ipFinal;
     private int cantidadEquiposRespuesta = 0; // Contador de equipos que responden
-
+    
+    listaEquiposRed listaResultados = new listaEquiposRed();
+    ArrayList<String> listaIPs = generarListaIPs(ipInicio, ipFinal); // Lista de distintas IPs calculadas por una sola IP
+    
     public ComienzoScanner(String ipInicio, String ipFinal){
         this.ipInicio = ipInicio;
         this.ipFinal = ipFinal;
     }
+    
+    public ArrayList<String> generarListaIPs(String ipInicio, String ipFinal) {
+        ArrayList<String> listaIPs = new ArrayList<>();
+        
+        String[] partesInicio = ipInicio.split("\\.");
+        String[] partesFinal = ipFinal.split("\\.");
+
+        int base1 = Integer.parseInt(partesInicio[0]);
+        int base2 = Integer.parseInt(partesInicio[1]);
+        int base3 = Integer.parseInt(partesInicio[2]);
+        int inicio = Integer.parseInt(partesInicio[3]);
+        int fin = Integer.parseInt(partesFinal[3]);
+
+        for (int i = inicio; i <= fin; i++) {
+            listaIPs.add(base1 + "." + base2 + "." + base3 + "." + i);
+        }
+
+        return listaIPs;
+    }
+
 
     public int getCantidadEquiposRespuesta(){
         return cantidadEquiposRespuesta;
@@ -32,9 +56,9 @@ public class ComienzoScanner {
         }
     }
 
-    public boolean hacerPing(String ip){
+    public boolean hacerPing(String ip, int timeout){
         try{
-            boolean responde = InetAddress.getByName(ip).isReachable(1000);
+            boolean responde = InetAddress.getByName(ip).isReachable(timeout);
             if (responde == true){
                 cantidadEquiposRespuesta++;
             }
