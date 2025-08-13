@@ -4,12 +4,14 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import src.modelo.ComienzoScanner;
+import src.controlador.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ventana_principal extends JFrame implements ActionListener{
+    private Controlador controller;
 
     private JTextField ip_inicio = new JTextField(6);
     private JTextField ip_final = new JTextField(6);
@@ -123,12 +125,24 @@ public class ventana_principal extends JFrame implements ActionListener{
                 else{
                     ventanaCargar loading = new ventanaCargar(this);
                     loading.setVisible(true);
+
+                    Controlador controller = new Controlador();
+
+                    controller.startScan(ipInicioIngre, ipFinalIngre, tiempo_espera);
+
+                    // ComienzoScanner sc = new ComienzoScanner(ipInicioIngre, ipFinalIngre);
+
+                    // System.out.println("La IP " + ipInicioIngre + " es " + sc.esValida(ipInicioIngre));
+                    // System.out.println("La IP " + ipFinalIngre + " es " + sc.esValida(ipFinalIngre));
+
+                    // System.out.println("Ping: " + sc.hacerPing(ipInicioIngre, tiempo_espera));
                     
                 }
             }
         }
+        
         catch (Exception a){
-            System.out.println("Tuvo un error en su programa");
+            System.out.println("Tuvo un error en su programa.\n" + a);
         }
 
         // if (source == clean){
