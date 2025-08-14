@@ -133,13 +133,11 @@ public class ventana_principal extends JFrame implements ActionListener{
                 if (ipInicioIngre.isEmpty() || ipFinalIngre.isEmpty()){
                     JOptionPane.showMessageDialog(this, "Debe ingresar más información");
                 }
+
                 else{
                     // ventanaCargar loading = new ventanaCargar(this);
                     // loading.setVisible(true);
-
                     controller.startScan(ipInicioIngre, ipFinalIngre, tiempo_espera);
-
-
 
                     // ComienzoScanner sc = new ComienzoScanner(ipInicioIngre, ipFinalIngre);
 

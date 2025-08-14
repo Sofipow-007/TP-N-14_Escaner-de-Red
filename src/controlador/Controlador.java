@@ -25,7 +25,7 @@ public class Controlador {
         boolean responde2 = scanner.esValida(ipFinal);
 
         if (responde1 && responde2){
-            boolean resultado = scanner.hacerPing(ipInicio, timeout);
+            boolean resultado = scanner.hacerPing(ipFinal, timeout);
 
             String[] hostAndIPfinal = scanner.obtenerNombreIP(ipFinal);
 
@@ -44,9 +44,10 @@ public class Controlador {
 
         }
 
-        // else{
-        //     JOptionPane.showMessageDialog("Esta dirección de IP no existe. Vuelva a intentarlo");
-        // }
+        else{
+            JOptionPane.showMessageDialog(ventanaPrinc, "Error de compilación. Ingrese una mejor IP");
+            return;
+        }
     }
 
     private void mostrarEquiposEnVista() {
