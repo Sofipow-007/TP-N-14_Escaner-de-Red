@@ -13,11 +13,11 @@ public class listaEquiposRed { // Esta clase va a servir para poder mantener un 
         listaEquipos.add(equipoRed);
     }
 
-    public void limpiarLista(){
-        listaEquipos.clear();
-    }
-
     public ArrayList<ResultadoScanner> getListaEquipos(){
         return listaEquipos;
+    }
+
+    public void limpiarLista(){
+        listaEquipos.clear();
     }
 }

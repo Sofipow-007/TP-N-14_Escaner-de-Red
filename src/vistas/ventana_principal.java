@@ -3,8 +3,8 @@ package src.vistas;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import src.modelo.ComienzoScanner;
 import src.controlador.*;
+import src.modelo.ResultadoScanner;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -25,12 +25,14 @@ public class ventana_principal extends JFrame implements ActionListener{
     private DefaultTableModel modeloTabla;
     private JScrollPane scrollTabla;
     
-    public ventana_principal(){
+    public ventana_principal(Controlador controller){
         setTitle("Escaner de Red");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(720, 620);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
+
+        this.controller = controller;
 
         JPanel lamina = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -93,7 +95,8 @@ public class ventana_principal extends JFrame implements ActionListener{
 
         modeloTabla = new DefaultTableModel();
         modeloTabla.setColumnIdentifiers(new String[] { "Dirección de IP", "Nombre de equipo", "Conectado", "Tiempo (ms)" });
-        modeloTabla.addRow(new Object[]{ "127.0.0.1", "localhost", true, "1 ms"});
+        
+        modeloTabla.addRow(new Object[]{ "127.0.0.1", "localhost", true, "1 ms"}); // Un Insert de prueba
 
         tablaEquiposRed = new JTable(modeloTabla);
 
@@ -107,6 +110,14 @@ public class ventana_principal extends JFrame implements ActionListener{
         lamina.add(scrollTabla, gbc);
 
         add(lamina);
+    }
+
+    public void agregarFila(ResultadoScanner equipo){
+        modeloTabla.addRow(new Object[] { equipo.getIpResult(), equipo.getNombreEquipo(), equipo.isConectado(), equipo.getTiempoRespuesta() + "ms" });
+    }
+
+    public void limpiarTabla() {
+        modeloTabla.setRowCount(0);
     }
 
     @Override
@@ -123,12 +134,12 @@ public class ventana_principal extends JFrame implements ActionListener{
                     JOptionPane.showMessageDialog(this, "Debe ingresar más información");
                 }
                 else{
-                    ventanaCargar loading = new ventanaCargar(this);
-                    loading.setVisible(true);
-
-                    Controlador controller = new Controlador();
+                    // ventanaCargar loading = new ventanaCargar(this);
+                    // loading.setVisible(true);
 
                     controller.startScan(ipInicioIngre, ipFinalIngre, tiempo_espera);
+
+
 
                     // ComienzoScanner sc = new ComienzoScanner(ipInicioIngre, ipFinalIngre);
 
@@ -139,15 +150,16 @@ public class ventana_principal extends JFrame implements ActionListener{
                     
                 }
             }
+
+            if (source == clean){
+                controller.clearList();
+            }
         }
         
         catch (Exception a){
             System.out.println("Tuvo un error en su programa.\n" + a);
         }
 
-        // if (source == clean){
-
-        // }
         // TODO Auto-generated method stub
     }
 }

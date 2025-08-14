@@ -1,17 +1,21 @@
 package src.controlador;
 
-import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 import src.modelo.*;
 import src.vistas.*;
 
 public class Controlador {
-    private ventana_principal ventanaPrinc = new ventana_principal();
+    private ventana_principal ventanaPrinc;
     private ComienzoScanner scanner;
+
     private listaEquiposRed listaResultados;
+    private ResultadoScanner equipoRedResult;
 
     public Controlador(){
         listaResultados = new listaEquiposRed();
+        ventanaPrinc = new ventana_principal(this);
+        ventanaPrinc.setVisible(true);
     }
 
     public void startScan(String ipInicio, String ipFinal, int timeout){
@@ -30,11 +34,33 @@ public class Controlador {
 
             // Agregar los resultados dichos a la lista de los equipos de red, proximamente
 
+            equipoRedResult = new ResultadoScanner(hostAndIPfinal[1], hostAndIPfinal[0], resultado, timeout);
+
+            listaResultados.agregarEquipo(equipoRedResult);
+
+            System.out.println(listaResultados.getListaEquipos());
+
+            mostrarEquiposEnVista();
+
+        }
+
+        // else{
+        //     JOptionPane.showMessageDialog("Esta dirección de IP no existe. Vuelva a intentarlo");
+        // }
+    }
+
+    private void mostrarEquiposEnVista() {
+        ventanaPrinc.limpiarTabla();
+
+        for (ResultadoScanner equipo : listaResultados.getListaEquipos()){
+            ventanaPrinc.agregarFila(equipo);
         }
     }
 
+
     public void clearList(){ // Elimina los resultados 
         listaResultados.limpiarLista();
+        ventanaPrinc.limpiarTabla();
     }
 
 }
