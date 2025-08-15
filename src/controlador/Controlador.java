@@ -10,12 +10,11 @@ public class Controlador {
     private ComienzoScanner scanner;
 
     private listaEquiposRed listaResultados;
-    private ResultadoScanner equipoRedResult;
 
     public Controlador(){
-        listaResultados = new listaEquiposRed();
+        listaResultados = new listaEquiposRed(); // Se crea una lista de resultados para poder guardar la cantidad de equipos que responden a la IP
         ventanaPrinc = new ventana_principal(this);
-        ventanaPrinc.setVisible(true);
+        ventanaPrinc.setVisible(true); // Al llamar al constructor del controlador, se crea la vista principal y se hace visible
     }
 
     public void startScan(String ipInicio, String ipFinal, int timeout){
@@ -25,22 +24,11 @@ public class Controlador {
         boolean responde2 = scanner.esValida(ipFinal);
 
         if (responde1 && responde2){
-            boolean resultado = scanner.hacerPing(ipFinal, timeout);
-
-            String[] hostAndIPfinal = scanner.obtenerNombreIP(ipFinal);
-
-            System.out.println("Nombre de host: " + hostAndIPfinal[0]);
-            System.out.println("Direccion IP: " + hostAndIPfinal[1]);
-
-            // Agregar los resultados dichos a la lista de los equipos de red, proximamente
-
-            equipoRedResult = new ResultadoScanner(hostAndIPfinal[1], hostAndIPfinal[0], resultado, timeout);
-
-            listaResultados.agregarEquipo(equipoRedResult);
-
-            System.out.println(listaResultados.getListaEquipos());
+            listaResultados = scanner.escaneoEntreIPs(timeout);
 
             mostrarEquiposEnVista();
+
+            JOptionPane.showMessageDialog(ventanaPrinc, "Se encontró correctamente la dirección IP, con un cálculo de " + scanner.getCantidadEquiposRespuesta() + " equipos de red encontrados");
 
         }
 

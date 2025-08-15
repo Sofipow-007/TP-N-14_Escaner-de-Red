@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ventana_principal extends JFrame implements ActionListener{
+public class ventana_principal extends JFrame implements ActionListener {
     private Controlador controller;
 
     private JTextField ip_inicio = new JTextField(6);
@@ -24,11 +24,11 @@ public class ventana_principal extends JFrame implements ActionListener{
     private JTable tablaEquiposRed = new JTable();
     private DefaultTableModel modeloTabla;
     private JScrollPane scrollTabla;
-    
-    public ventana_principal(Controlador controller){
+
+    public ventana_principal(Controlador controller) {
         setTitle("Escaner de Red");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(720, 620);
+        setSize(720, 600);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
@@ -46,14 +46,13 @@ public class ventana_principal extends JFrame implements ActionListener{
         gbc.gridwidth = 4;
         lamina.add(textoIntro, gbc);
 
-        
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 1;
         lamina.add(new JLabel("IP de inicio: "), gbc);
 
         gbc.gridx = 2;
-        
+
         lamina.add(ip_inicio, gbc);
 
         gbc.gridx = 0;
@@ -87,16 +86,16 @@ public class ventana_principal extends JFrame implements ActionListener{
         lamina.add(panelBotones, gbc);
 
         JLabel presentarTabla = new JLabel("Tabla de información; todos los resultados van a aparecer a continuación");
-        
+
         gbc.fill = GridBagConstraints.CENTER;
         gbc.gridy = 5;
 
         lamina.add(presentarTabla, gbc);
 
         modeloTabla = new DefaultTableModel();
-        modeloTabla.setColumnIdentifiers(new String[] { "Dirección de IP", "Nombre de equipo", "Conectado", "Tiempo (ms)" });
-        
-        modeloTabla.addRow(new Object[]{ "127.0.0.1", "localhost", true, "1 ms"}); // Un Insert de prueba
+        modeloTabla.setColumnIdentifiers(
+            new String[] { "Dirección de IP", "Nombre de equipo", "Conectado", "Tiempo (ms)" }
+        );
 
         tablaEquiposRed = new JTable(modeloTabla);
 
@@ -112,7 +111,7 @@ public class ventana_principal extends JFrame implements ActionListener{
         add(lamina);
     }
 
-    public void agregarFila(ResultadoScanner equipo){
+    public void agregarFila(ResultadoScanner equipo) {
         modeloTabla.addRow(new Object[] { equipo.getIpResult(), equipo.getNombreEquipo(), equipo.isConectado(), equipo.getTiempoRespuesta() + "ms" });
     }
 
@@ -122,40 +121,45 @@ public class ventana_principal extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        try{
+        try {
             Object source = e.getSource();
-    
+
             String ipInicioIngre = ip_inicio.getText();
             String ipFinalIngre = ip_final.getText();
             int tiempo_espera = Integer.parseInt(tiempoTimeout.getText());
-    
-            if (source == scan){
-                if (ipInicioIngre.isEmpty() || ipFinalIngre.isEmpty()){
+
+            if (source == scan) {
+                if (ipInicioIngre.isEmpty() || ipFinalIngre.isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Debe ingresar más información");
                 }
 
-                else{
-                    // ventanaCargar loading = new ventanaCargar(this);
-                    // loading.setVisible(true);
-                    controller.startScan(ipInicioIngre, ipFinalIngre, tiempo_espera);
+                else {
+                    ventanaCargar loading = new ventanaCargar(this, () -> {
+                        controller.startScan(ipInicioIngre, ipFinalIngre, tiempo_espera);
+                    });
+                    
+                    loading.setModal(true);
+                    loading.setVisible(true);
 
                     // ComienzoScanner sc = new ComienzoScanner(ipInicioIngre, ipFinalIngre);
 
-                    // System.out.println("La IP " + ipInicioIngre + " es " + sc.esValida(ipInicioIngre));
-                    // System.out.println("La IP " + ipFinalIngre + " es " + sc.esValida(ipFinalIngre));
+                    // System.out.println("La IP " + ipInicioIngre + " es " +
+                    // sc.esValida(ipInicioIngre));
+                    // System.out.println("La IP " + ipFinalIngre + " es " +
+                    // sc.esValida(ipFinalIngre));
 
                     // System.out.println("Ping: " + sc.hacerPing(ipInicioIngre, tiempo_espera));
-                    
+
                 }
             }
 
-            if (source == clean){
+            if (source == clean) {
                 controller.clearList();
             }
         }
-        
-        catch (Exception a){
-            System.out.println("Tuvo un error en su programa.\n" + a);
+
+        catch (Exception a) {
+            JOptionPane.showMessageDialog(this, "Tuvo un error en su programa.\n" + a);
         }
 
         // TODO Auto-generated method stub
