@@ -44,3 +44,11 @@ El proyecto está dividido en diferentes sectores importantes para que pueda uti
 - Llamadas al sistema con 'nslookup' y 'ping'
 - Java, utilizando la programación orientada a objetos (separando la lógica y la vista)
 - Git para controlar versiones
+
+## Orden de entrega
+
+Esta sección se trata sobre todo lo realizado en cada entrega parcial (luego incluída la entrega final), ya sea con cosas en proceso o terminadas
+
+- Martes 5 de Agosto: Se creó el repositorio en GitHub, con una parte del README hecho y la creación de la ventana principal de este proyecto.
+
+- Martes 12 de Agosto: Entrega con la carpeta scr actualizada, incluyendo una división de paquetes para diferenciar la parte lógica, la visual y la que controla estas. En ese momento la interfaz gráfica estaba en proceso con muchos adelantos pero algunas cosas restantes (como agregar resultados a la tabla de ventana principal junto con el ordenamiento y más).
