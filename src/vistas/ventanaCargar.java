@@ -2,14 +2,15 @@ package src.vistas;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.function.Consumer;
 
 public class ventanaCargar extends JDialog{
     
     private JProgressBar barraProgreso;
-    private Runnable onFinish;
+    // private Runnable onFinish;
 
-    public ventanaCargar(JFrame ventanFrame, Runnable onFinish){
-        this.onFinish = onFinish;
+    public ventanaCargar(JFrame ventanFrame){
+        // this.onFinish = onFinish;
 
         setTitle("Proceso de búsqueda");
         setSize(400, 150);
@@ -62,12 +63,22 @@ public class ventanaCargar extends JDialog{
             @Override
             protected void done() {
                 dispose(); // cerrar ventana al terminar
-                if (onFinish != null){
-                    onFinish.run();
-                }
+                // if (onFinish != null){
+                //     onFinish.run();
+                // }
             }
         };
 
         worker.execute();
+    }
+
+    
+    public Consumer<Integer> getActualizarProgreso() {
+        return (porcentaje) -> SwingUtilities.invokeLater(() -> {
+            barraProgreso.setValue(porcentaje);
+            if (porcentaje >= 100) {
+                dispose();
+            }
+        });
     }
 }

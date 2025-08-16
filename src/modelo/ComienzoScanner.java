@@ -1,16 +1,20 @@
 package src.modelo;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetAddress; //Librería utilizada para poder usar el protocolo IP
 import java.net.UnknownHostException;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 public class ComienzoScanner {
     private String ipInicio;
     private String ipFinal;
     private int cantidadEquiposRespuesta; // Contador de equipos que responden
+    private ExecutorService pool;
+    private boolean cancelado = false; 
 
     private listaEquiposRed listaResultados = new listaEquiposRed(); // Lista de los resultados que se van a mostrar
 
@@ -27,22 +31,29 @@ public class ComienzoScanner {
 
     public boolean esValida(String direccion_ip) {
         try {
-            InetAddress.getByName(direccion_ip);
-            return true;
-        } catch (UnknownHostException e) {
-            return false;
+            InetAddress address = InetAddress.getByName(direccion_ip);
+            System.out.println(address);
+            return address.isReachable(1000);
+        }
+
+        catch (Exception e) {
+            return false; // IP o DNS inválido/fallido
         }
     }
 
     public boolean hacerPing(String ip, int timeout) {
         try {
+            if (Thread.currentThread().isInterrupted() || cancelado) return false;
+            
             boolean responde = InetAddress.getByName(ip).isReachable(timeout);
             if (responde == true) {
                 cantidadEquiposRespuesta++;
             }
 
             return responde;
-        } catch (IOException e) {
+        }
+        
+        catch (IOException e) {
             return false;
         }
     }
@@ -72,9 +83,58 @@ public class ComienzoScanner {
         }
     }
 
-    public listaEquiposRed escaneoEntreIPs(int timeout) {
+    public int obtenerTiempoPing(String host, int timeout) {
+        try {
+            if (Thread.currentThread().isInterrupted() || cancelado) return 0;
+            // Comando ping para Windows
+            ProcessBuilder pb = new ProcessBuilder("ping", "-n", "1", "-w", String.valueOf(timeout), host);
+            Process process = pb.start();
+
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (line.matches(".*\\d+ms.*")) {
+                        String t = line.replaceAll(".*?(\\d+)ms.*", "$1");
+                        return Integer.parseInt(t.trim());
+                    }
+                }
+            }
+            process.waitFor();
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return timeout; // fallback si falla
+    }
+
+    public void cancelar() {
+        cancelado = true;
+        if (pool != null && !pool.isShutdown()) {
+            pool.shutdownNow(); // Esta función va a interrumpir los hilos que estén en ejecución
+        }
+    }
+
+    public listaEquiposRed escaneoEntreIPs(int timeout, Consumer<Integer> actualizarProgreso) {
         cantidadEquiposRespuesta = 0;
         listaResultados.limpiarLista();
+
+        cancelado = false; // reset
+
+        // Caso en que haya IP única o dirección DNS
+
+        if (ipFinal.isEmpty() || !ipFinal.matches("\\d+\\.\\d+\\.\\d+\\.\\d+")) {
+            if (!cancelado){
+                boolean responde = hacerPing(ipInicio, timeout);
+                String[] datos = obtenerNombreIP(ipInicio);
+                int tiempoRespuesta = obtenerTiempoPing(ipInicio, timeout);
+    
+                listaResultados.agregarEquipo(new ResultadoScanner(datos[1], datos[0], responde, tiempoRespuesta));
+                actualizarProgreso.accept(100); // progreso completo
+            }
+            return listaResultados;
+        }
 
         String[] inicioPartes = ipInicio.split("\\.");
         String[] finPartes = ipFinal.split("\\.");
@@ -85,41 +145,50 @@ public class ComienzoScanner {
         int inicio = Integer.parseInt(inicioPartes[3]);
         int fin = Integer.parseInt(finPartes[3]);
 
-        // Corregir mañana 15/08: Tiempo de ejecucion
+        int totalIPs = fin - inicio + 1;
+        AtomicInteger procesadas = new AtomicInteger(0);
 
-        ExecutorService pool = Executors.newFixedThreadPool(20); // 20 hilos simultáneos (corregir)
-        CountDownLatch latch = new CountDownLatch(fin - inicio + 1); // (corregir)
+        pool = Executors.newFixedThreadPool(20); // 20 hilos simultáneos
+        // CountDownLatch latch = new CountDownLatch(fin - inicio + 1); // (corregir)
 
         for (int i = inicio; i <= fin; i++) {
-            String ip = base1 + "." + base2 + "." + base3 + "." + i;
-            
-            String[] datos = obtenerNombreIP(ip);
 
-            boolean responde = hacerPing(ip, timeout);
+            String ip = base1 + "." + base2 + "." + base3 + "." + i;
 
             pool.submit(() -> {
-                if (responde) {
-                    System.out.println("✔ Responde: " + ip);
-                    synchronized (listaResultados){
-                        listaResultados.agregarEquipo(new ResultadoScanner(datos[1], datos[0], true, timeout));
-                    }
-                } 
-                else{
-                    synchronized (listaResultados){
-                        listaResultados.agregarEquipo(new ResultadoScanner(datos[1], datos[0], false, timeout));
-                    }
+
+                if (cancelado || Thread.currentThread().isInterrupted()) return;
+
+                boolean responde = hacerPing(ip, timeout);
+
+                if (cancelado || Thread.currentThread().isInterrupted()) return;
+
+                String[] datos = obtenerNombreIP(ip);
+                int tiempoRespuesta = obtenerTiempoPing(ip, timeout);
+
+                if (cancelado || Thread.currentThread().isInterrupted()) return;
+
+                synchronized (listaResultados) {
+                    listaResultados.agregarEquipo(new ResultadoScanner(
+                            datos[1], datos[0], responde, tiempoRespuesta));
                 }
-                latch.countDown();
+
+                int hechas = procesadas.incrementAndGet();
+                int porcentaje = (int) ((hechas / (double) totalIPs) * 100);
+                actualizarProgreso.accept(porcentaje);
             });
         }
-        try { // (corregir)
-            latch.await(); // Espera a que terminen todos los hilos
+
+        pool.shutdown();
+
+        try {
+            pool.awaitTermination(2, TimeUnit.MINUTES);
         }
+
         catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        pool.shutdown();
         return listaResultados;
     }
 }
