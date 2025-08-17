@@ -47,6 +47,8 @@ public class ResultadoScanner { // En esta clase se van a guardar los resultados
         this.tiempoRespuesta = tiempoRespuesta;
     }
 
+    // Se crea un toString para poder devolver una representación del objeto en la lista, en vez de solo devolver la referencia del lugar que se creó
+
     @Override
     public String toString() {
         return "IP: " + this.ipResult + ", Host: " + this.nombreEquipo + ", Responde: " + this.conectado + ", Timeout: " + this.tiempoRespuesta;
