@@ -47,7 +47,8 @@ public class ResultadoScanner { // En esta clase se van a guardar los resultados
         this.tiempoRespuesta = tiempoRespuesta;
     }
 
-    // Se crea un toString para poder devolver una representación del objeto en la lista, en vez de solo devolver la referencia del lugar que se creó
+    // Se crea un toString para poder devolver una representación legible del objeto en la lista, en vez de solo devolver la referencia del lugar que se creó
+    // Por ejemplo, si quiero tener el valor del nombre del equipo, el toString sirve mucho para devolver esta información
 
     @Override
     public String toString() {
