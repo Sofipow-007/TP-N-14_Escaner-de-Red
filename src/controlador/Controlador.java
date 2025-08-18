@@ -80,7 +80,7 @@ public class Controlador { // La clase Controlador va a servir como una colecci�
 
                 catch (IllegalArgumentException ex) {
                     // Si se llega a encontrar un error de argumento en el bloque try anterior, se
-                    // va a utilizar otro invokeLater() para terminar con la ventana dde carga y
+                    // va a utilizar otro invokeLater() para terminar con la ventana de carga y
                     // para ejecutar un pop-up de error encontrado
 
                     SwingUtilities.invokeLater(() -> {
@@ -141,11 +141,9 @@ public class Controlador { // La clase Controlador va a servir como una colecci�
     }
 
     private void mostrarEquiposEnVista() {
-        // Esta función, como se explicó anteriormente, va a servir para vincular la
-        // lista de equipos de red calculada en la función startScan() con una función
-        // creada en la vista principal
-        // Gracias a esto se va a poder mostrar cada equipo calculado y aceptado en los
-        // cálculos de la clase ComienzoScanner, sin que haya ningún error
+        // Esta función, como se explicó anteriormente, va a servir para vincular la lista de equipos de red calculada en la función startScan() con una función creada en la vista principal
+
+        // Gracias a esto se va a poder mostrar cada equipo calculado y aceptado en los cálculos de la clase ComienzoScanner, sin que haya ningún error
 
         ventanaPrinc.limpiarTabla(); // Antes de comenzar se actualiza la tabla para agregar nueva información en
                                      // ella
