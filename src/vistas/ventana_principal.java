@@ -61,7 +61,7 @@ public class ventana_principal extends JFrame implements ActionListener {
 
         JPanel lamina = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints(); // El GridBagConstraints sirve para ordenar cada componente
-                                                           // de la interfaz de forma customizada por el porgramador
+                                                           // de la interfaz de forma customizada por el programador
         gbc.fill = GridBagConstraints.CENTER;
 
         gbc.insets = new Insets(8, 8, 8, 8);
@@ -150,7 +150,7 @@ public class ventana_principal extends JFrame implements ActionListener {
 
         gbc.gridx = 0;
         gbc.gridy = 3;
-        lamina.add(new JLabel("Dirección DNS (opcional): "), gbc);
+        lamina.add(new JLabel("Dirección DNS: "), gbc);
 
         gbc.gridx = 2;
 
@@ -432,7 +432,7 @@ public class ventana_principal extends JFrame implements ActionListener {
             }
         }
 
-        catch (Exception a) { // En caso de que el constructor salga mal
+        catch (Exception a) { // En caso de que el actionPerformed salga mal
             JOptionPane.showMessageDialog(this, "Tuvo un error en su programa.\n" + a, "Error encontrado",
                     JOptionPane.ERROR_MESSAGE);
         }
