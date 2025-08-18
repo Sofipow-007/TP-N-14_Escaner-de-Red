@@ -17,7 +17,7 @@ import java.util.concurrent.*; // Este paquete nos va a servir para el manejo de
 
 import java.util.concurrent.atomic.AtomicInteger; // En este código nos va a permitir implementar el manejo de números enteros de forma segura en entornos concurrentes (varios hilos que modifican una misma variable)
 
-import java.util.function.Consumer; // Se trata de una interfaz funcional que representa a una operación que recibe un parámetro y no devuelve nada, usado en lambdas o métodos que reciben callbacks
+import java.util.function.Consumer; // Se trata de una interfaz funcional que representa a una operación que recibe un parámetro y no devuelve nada, usado en lambdas o métodos que reciben callback
 
 public class ComienzoScanner {
     private String ipInicio; // IP inicial
