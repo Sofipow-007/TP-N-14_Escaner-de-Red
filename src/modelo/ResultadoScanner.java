@@ -19,31 +19,31 @@ public class ResultadoScanner { // En esta clase se van a guardar los resultados
 
     // Elaboración de los getters y setters de la clase ResultadoScanner
 
-    public String getIpResult(){ // Devuelve la IP del equipo
+    public String getIpResult(){ // Getter: Devuelve la IP del equipo
         return ipResult;
     }
 
-    public void setIpResult(String ipResult){ // Modifica la IP del equipo
+    public void setIpResult(String ipResult){ // Setter: Modifica la IP del equipo
         this.ipResult = ipResult;
     }
 
-    public String getNombreEquipo(){ // Devuelve el nombre del equipo
+    public String getNombreEquipo(){ // Getter: Devuelve el nombre del equipo
         return nombreEquipo;
     }
 
-    public void setNombreEquipo(String nombreEquipo){ // Modifica el nombre del equipo
+    public void setNombreEquipo(String nombreEquipo){ // Setter: Modifica el nombre del equipo
         this.nombreEquipo = nombreEquipo;
     }
 
-    public boolean isConectado(){ // Verifica el estado del booleano
+    public boolean isConectado(){ // Getter: Verifica el estado del booleano
         return conectado;
     }
 
-    public int getTiempoRespuesta(){ // Devuelve el tiempo de respuesta
+    public int getTiempoRespuesta(){ // Getter: Devuelve el tiempo de respuesta
         return tiempoRespuesta;
     }
 
-    public void setTiempoRespuesta(int tiempoRespuesta){ // Modifica el tiempo de respuesta
+    public void setTiempoRespuesta(int tiempoRespuesta){ // Setter: Modifica el tiempo de respuesta
         this.tiempoRespuesta = tiempoRespuesta;
     }
 
