@@ -8,7 +8,7 @@ import src.modelo.ResultadoScanner; // Se va a utilizar para agregar filas a la 
 
 import java.awt.*; // Importa componentes para la vista
 import java.awt.event.ActionEvent; // Sirve para recibir una acción en algun elemento de la interfaz, como un botón
-import java.awt.event.ActionListener; // Identifica cuando se haya llamado a algún componente de la interfaz, y asi llama a una función Override SctionPerformed
+import java.awt.event.ActionListener; // Identifica cuando se haya llamado a algún componente de la interfaz, y asi llama a una función Override ActionPerformed
 
 import java.io.File; // Representa archivos y directorios
 import java.io.FileWriter; // Procesa de texto a carácteres de un archivo
@@ -202,7 +202,7 @@ public class ventana_principal extends JFrame implements ActionListener {
         sorter = new TableRowSorter<>(modeloTabla);
         tablaEquiposRed.setRowSorter(sorter); // Sirve para filtrar la información, si es que queremos hacerlo
 
-        // Se identifica un compararor en cada columna para identificar cuando sea de forma ascendente o descendente
+        // Se identifica un comparador en cada columna para identificar cuando sea de forma ascendente o descendente
         
         // ---- Primera columna: Direcciones IP ----
 
@@ -251,7 +251,7 @@ public class ventana_principal extends JFrame implements ActionListener {
 
         lamina.add(scrollTabla, gbc);
 
-        // Organozación de los JComboBox de opciones
+        // Organización de los JComboBox de opciones
 
         // Primero se hace el que ordena los resultados
 
