@@ -29,6 +29,7 @@ public class ventana_principal extends JFrame implements ActionListener {
     private JButton scan = new JButton("Escanear");
     private JButton clean = new JButton("Limpiar");
     private JButton save = new JButton("Guardar");
+    private JButton netButton = new JButton("Herramientas NetStat");
 
     // "Caja" que contiene múltiples opciones (Drop-down)
     private JComboBox orderTable = new JComboBox<>();
@@ -168,6 +169,7 @@ public class ventana_principal extends JFrame implements ActionListener {
         scan.addActionListener(this);
         clean.addActionListener(this);
         save.addActionListener(this);
+        netButton.addActionListener(this);
 
         // En este caso, el ActionListener sirve para que cada uno de los botones, cada
         // vez que ea presionado, devuelve un valor de que se activó
@@ -175,6 +177,7 @@ public class ventana_principal extends JFrame implements ActionListener {
         panelBotones.add(scan);
         panelBotones.add(clean);
         panelBotones.add(save);
+        panelBotones.add(netButton);
 
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.CENTER;
@@ -390,6 +393,11 @@ public class ventana_principal extends JFrame implements ActionListener {
                 else{
                     guardarResultados();
                 }
+            }
+
+            if (source == netButton) {
+                panelNetStat netstat = new panelNetStat(controller);
+                netstat.setVisible(true);
             }
 
             String opcionOrdenar = (String) orderTable.getSelectedItem(); // Se obtiene la opción elegida para ordenar la información
