@@ -395,8 +395,8 @@ public class ventana_principal extends JFrame implements ActionListener {
                 }
             }
 
-            if (source == netButton) {
-                panelNetStat netstat = new panelNetStat(controller);
+            if (source == netButton) { // Si se presiona este botón, nos lleva al contenido de la nueva actualización, basada en el uso de comandos NetStat
+                panelNetStat netstat = new panelNetStat();
                 netstat.setVisible(true);
             }
 
