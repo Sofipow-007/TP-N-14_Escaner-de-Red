@@ -65,4 +65,4 @@ Esta sección se trata sobre todo lo realizado en cada entrega parcial (luego in
 
 - Martes 12 de Agosto: Entrega con la carpeta src actualizada, incluyendo una división de paquetes para diferenciar la parte lógica, la visual y la que controla estas. En ese momento la interfaz gráfica estaba en proceso con muchos adelantos pero algunas cosas restantes (como agregar resultados a la tabla de ventana principal junto con el ordenamiento y más).
 
-- Lunes 29 de Septiembre: Nueva actualización del código, con una nueva vista para observar estadísticas de red en tu dispositivo, nuevo controlador y clase lógica orientadas a este nuevo comando implementado.
+- Lunes 29 de Septiembre: Actualización del código, con una nueva vista para observar estadísticas de red en tu dispositivo, nuevo controlador y clase lógica orientadas a este nuevo comando implementado.
