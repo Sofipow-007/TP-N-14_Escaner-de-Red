@@ -15,19 +15,21 @@ public class ControladorNetStat { // Esta clase nos va a permitir hacer la conex
         this.modelo = new ComandosNetStat();
     }
 
-    // Método que la vista llama cuando se aprieta el botón
+    // Método que la vista llama cuando se aprieta el botón "conexionesActivas"
     public void mostrarConexiones() {
         String resultado = modelo.mostrarConexionesActivas();
         vista.setResultado(resultado);
         JOptionPane.showMessageDialog(vista, "Se encontraron las conexiones correctamente", "Búsqueda finalizada", JOptionPane.PLAIN_MESSAGE);
     }
 
+    // Método que la vista llama cuando se presiona el botón "infoRouter"
     public void mostrarRouting() {
         String resultado = modelo.mostrarTablaRouting();
         vista.setResultado(resultado);
         JOptionPane.showMessageDialog(vista, "Tabla de routing completa", "Búsqueda finalizada", JOptionPane.PLAIN_MESSAGE);
     }
 
+    // Método que la vista llama cuando se presiona el botón "protocolosStats"
     public void mostrarProtocolos() {
         String resultado = modelo.muestraEstadisticasProtocolos();
         vista.setResultado(resultado);
