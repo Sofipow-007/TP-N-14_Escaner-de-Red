@@ -140,11 +140,6 @@ public class Controlador { // La clase Controlador va a servir como una colecci�
         }
     }
 
-    public String commandNetStat() {
-        scanner = new ComienzoScanner("", "");
-        return scanner.mostrarConexionesActivas();
-    }
-
     private void mostrarEquiposEnVista() {
         // Esta función, como se explicó anteriormente, va a servir para vincular la lista de equipos de red calculada en la función startScan() con una función creada en la vista principal
 
