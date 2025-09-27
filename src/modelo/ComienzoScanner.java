@@ -19,8 +19,6 @@ import java.util.concurrent.atomic.AtomicInteger; // En este código nos va a pe
 
 import java.util.function.Consumer; // Se trata de una interfaz funcional que representa a una operación que recibe un parámetro y no devuelve nada, usado en lambdas o métodos que reciben callback
 
-import javax.swing.JOptionPane;
-
 public class ComienzoScanner {
     private String ipInicio; // IP inicial
     private String ipFinal; // IP final
@@ -36,8 +34,7 @@ public class ComienzoScanner {
         this.ipFinal = ipFinal;
     }
 
-    public int getCantidadEquiposRespuesta() { // Devuelve la cantidad de equipos que respondieron (que estén
-                                               // conectados)
+    public int getCantidadEquiposRespuesta() { // Devuelve la cantidad de equipos que respondieron (que estén conectados)
         return cantidadEquiposRespuesta;
     }
 
@@ -236,48 +233,6 @@ public class ComienzoScanner {
             }
 
             return listaResultados;
-        }
-    }
-
-    public String mostrarConexionesActivas() {
-        StringBuilder resultado = new StringBuilder();
-        try {
-            ProcessBuilder pb = new ProcessBuilder("netstat");
-            Process proceso = pb.start();
-
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(proceso.getInputStream()))) {
-                String line;
-                resultado.append("Conexiones activas:");
-                while ((line = reader.readLine()) != null) {
-                    resultado.append(line).append("\n");
-                }
-            }
-        }
-        
-        catch (Exception e) {
-            System.err.println("Hubo un error al ejecutar netstat");
-            e.printStackTrace();
-        }
-        
-        return resultado.toString();
-    }
-
-    public void muestraEstadisticasProtocolos() {
-        try {
-            ProcessBuilder pb = new ProcessBuilder("netstat", "-s");
-            Process proceso = pb.start();
-
-            try (BufferedReader read = new BufferedReader(new InputStreamReader(proceso.getInputStream()))) {
-                String line;
-                System.out.println("Estadísticas de protocolos:");
-                while ((line = read.readLine()) != null) {
-                    System.out.println(line);
-                }
-            }
-            proceso.waitFor();
-        } catch (Exception e) {
-            System.err.println("Error al ejecutar netstat -s");
-            e.printStackTrace();
         }
     }
 }
