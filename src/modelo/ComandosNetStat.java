@@ -15,7 +15,6 @@ public class ComandosNetStat { // Esta clase del paquete "modelo" nos va a servi
 
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                 String line;
-                resultado.append("Conexiones activas:\n");
 
                 while ((line = reader.readLine()) != null) {
                     resultado.append(line).append("\n");
